@@ -1,0 +1,80 @@
+
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: #f5fdf6; 
+            color: #333;
+        }
+        header {
+            background-color: #65BD00;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            position: relative;
+        }
+        header img {
+            width: 212px;
+            position: absolute;
+            left: 80px;
+            top: 0px;
+        }
+        main {
+            margin: 30px auto;
+            max-width: 1000px;
+            height: 400px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 50px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1, h2 {
+            margin: 0;
+            padding: 10px 0;
+        }
+        h2 {
+            color: #041d05; 
+        }
+        a {
+            font-size: 18px;
+            color: #4c8e01; 
+            transition: color 0.3s;
+        }
+        a:hover {
+            color: #4c8e019f; 
+            text-decoration: underline;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="{% static 'pa/img/logo_website_white.svg' %}" alt="Логотип"> 
+        <h1>Главная страница</h1>
+    </header>
+    <main>
+        <h2>Методы прогнозирования</h2>
+        <ul>
+            <li><a href="{% url 'pa' %}" title="Фазовый анализ: метод, основанный на анализе временных рядов.">Фазовый анализ</a></li>
+            <li><a href="kv.html" title="Фазовый анализ с квазициклами: метод, учитывающий квазициклические колебания.">Фазовый анализ с квазициклами</a></li>
+            <li><a href="lka.html" title="Линейно-клеточный автомат: метод, использующий клеточные автоматы для моделирования.">Линейно-клеточный автомат</a></li>
+            <li><a href="kr.html" title="??????????">Анализ с диаграммами</a></li>
+        </ul>
+    </main> 
+</body>
+</html>

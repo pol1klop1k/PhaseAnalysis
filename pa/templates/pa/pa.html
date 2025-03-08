@@ -1,0 +1,111 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Фазовый анализ</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: #f5fdf6; 
+            color: #333;
+        }
+        header {
+            background-color: #65BD00;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            position: relative;
+        }
+        header img {
+            width: 212px;
+            position: absolute;
+            left: 80px;
+            top: 0px;
+        }
+        main {
+            margin: 30px auto;
+            max-width: 1000px;
+            height: 400px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 50px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            margin: 0;
+            padding: 10px 0;
+        }
+        h2 {
+            color: #041d05; 
+        }
+        a {
+            font-size: 18px;
+            color: #4c8e01; 
+            transition: color 0.3s;
+        }
+        a:hover {
+            color: #4c8e019f; 
+            text-decoration: underline;
+        }
+        #uploadProgress {
+            width: 100%;
+            margin-top: 15px;
+            background-color: #f3f3f3;
+            border: 1px solid #ccc;
+            height: 20px;
+            display: none;
+        }
+        #progressBar {
+            width: 0;
+            height: 100%;
+            background-color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="{% static 'pa/img/logo_website_white.svg' %}" alt="Логотип"> 
+        <h1>Фазовый анализ</h1>
+    </header>
+    <main>
+        <p><b>Фазовый анализ</b> - метод исследования локальных колебаний временного ряда, носящих ассиметричный, нерегулярный характер, имеющих неустойчивый период.</p>
+        <p><b>Цель фазового анализа</b> - определить основные свойства временного ряда на основе специальных показателей.</p>
+        <hr>
+        <h2 style = "font-size: 22px;">Инструкция по загрузке файла</h2>
+        <p>Файл должен быть в формате <b>.xls</b>! <br> Обратите внимание, что временной ряд должен находиться в столбце <b>"В"</b></p>
+        <hr>
+        <input style = "margin-top: 5px;" type="file" id="fileInput" />
+        <div id="uploadProgress">
+            <div id="progressBar"></div>
+        </div>
+        <div> 
+            <button style = "margin-top: 15px;" id="analyzeButton" disabled>Провести анализ</button>
+        </div>
+    </main>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const uploadProgress = document.getElementById('uploadProgress');
+        const progressBar = document.getElementById('progressBar');
+        const analyzeButton = document.getElementById('analyzeButton');
+
+        fileInput.addEventListener('change', function() {
+            uploadProgress.style.display = 'block';
+            let progress = 0;
+            const interval = setInterval(() => {
+                if (progress < 100) {
+                    progress += 10; // Увеличиваем прогресс
+                    progressBar.style.width = progress + '%';
+                } else {
+                    clearInterval(interval);
+                    analyzeButton.disabled = false; // Активируем кнопку после загрузки
+                }
+            }, 100); // Имитация загрузки файла
+        });
+    </script>
+</body>
+</html>
