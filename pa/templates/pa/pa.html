@@ -78,13 +78,15 @@
         <h2 style = "font-size: 22px;">Инструкция по загрузке файла</h2>
         <p>Файл должен быть в формате <b>.xls</b>! <br> Обратите внимание, что временной ряд должен находиться в столбце <b>"В"</b></p>
         <hr>
-        <input style = "margin-top: 5px;" type="file" id="fileInput" />
-        <div id="uploadProgress">
-            <div id="progressBar"></div>
-        </div>
-        <div> 
-            <button style = "margin-top: 15px;" id="analyzeButton" disabled>Провести анализ</button>
-        </div>
+        <form method="post" enctype="multipart/form-data">{% csrf_token %}
+            {{ form.as_p }}
+            <div id="uploadProgress">
+                <div id="progressBar"></div>
+            </div>
+            <div> 
+                <button style = "margin-top: 15px;" id="analyzeButton" disabled>Провести анализ</button>
+            </div>
+        </form>
     </main>
 
     <script>
