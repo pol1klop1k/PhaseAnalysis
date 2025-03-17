@@ -1,15 +1,15 @@
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
 import xlsxwriter as xl
+from io import BytesIO
 
-def read_dataset(filename):
-
-    dataset = pd.read_excel(filename, index_col=0)
+def read_dataset(file):
+    f = BytesIO(file.read())
+    dataset = pd.read_excel(f, index_col=0)
     return dataset
 
-def get_writer():
-    writer = pd.ExcelWriter("pa.xlsx", engine="xlsxwriter")
+def get_writer(stream):
+    writer = pd.ExcelWriter(stream, engine="xlsxwriter", engine_kwargs={'options': {'in_memory': True}})
     return writer
 
 def get_raw_phases(phases):
@@ -126,15 +126,17 @@ def make_iteration(phases, iteration_num, floor, charts_phases, writer):
     write_iteration_stats(iteration_stats, (iteration_num)*3, writer)
     return phases
 
-
 def main():
-    writer = get_writer()
-    dataset = read_dataset("data.xlsx")
+    return process("data.xlsx")
+
+def process(file):
+    stream = BytesIO()
+    writer = get_writer(stream)
+    dataset = read_dataset(file)
     s = prepare_dataset(dataset, writer)
     phases = make_phases(s)
     write_iterations(phases, 3, writer)
     iteration_stats = count_stats(phases, 0)
-    print(iteration_stats)
     write_iteration_stats(iteration_stats, 0, writer)
     charts_phases = [phases.droplevel(0)]
     phases = make_iteration(phases, 1, 0.5, charts_phases, writer)
@@ -144,6 +146,7 @@ def main():
     for sheet in writer.sheets.values():
         sheet.autofit()
     writer.close()
+    return stream.getvalue()
 
 if __name__ == "__main__":
     main()
